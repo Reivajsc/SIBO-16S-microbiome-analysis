@@ -77,7 +77,7 @@ metadata_file <- file.path(
   project_dir,
   "data",
   "metadata",
-  "SraRunTable.csv"
+  "metadata_123_samples.csv"
 )
 
 # Bases de datos SILVA
