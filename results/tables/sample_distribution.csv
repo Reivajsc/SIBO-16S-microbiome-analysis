@@ -1,0 +1,5 @@
+"SIBO","Hypothyroidism","Freq"
+"SIBO_NEG","Hypo_NEG",40
+"SIBO_POS","Hypo_NEG",40
+"SIBO_NEG","Hypo_POS",29
+"SIBO_POS","Hypo_POS",14
