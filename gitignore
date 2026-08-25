@@ -1,0 +1,53 @@
+# ==========================================================
+# Datos brutos y archivos de secuenciación
+# ==========================================================
+data/fastq/
+*.fastq
+*.fastq.gz
+*.fq
+*.fq.gz
+
+# ==========================================================
+# Base de datos SILVA
+# No redistribuir archivos de referencia pesados
+# ==========================================================
+data/silva/*.fa
+data/silva/*.fa.gz
+data/silva/*.fasta
+data/silva/*.fasta.gz
+
+# ==========================================================
+# Archivos intermedios / objetos R
+# ==========================================================
+data/processed/
+*.RData
+*.Rdata
+*.rds
+
+# ==========================================================
+# Archivos de R / RStudio
+# ==========================================================
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+*.Rproj
+
+# ==========================================================
+# Archivos temporales y del sistema
+# ==========================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+*.tmp
+*.temp
+*.log
+
+# ==========================================================
+# Copias de seguridad de editores
+# ==========================================================
+*~
+*.bak
+*.swp
+*.swo
