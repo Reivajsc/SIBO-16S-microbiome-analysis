@@ -505,29 +505,40 @@ rownames(seqtab.nochim) <- sample_ids
 
 # ==========================================================
 # 11. METADATOS CLÍNICOS
-#     SIBO + HIPOTIROIDISMO DESDE EL INICIO DEL ANÁLISIS
+#     COHORTE FINAL DE 123 MUESTRAS
 # ==========================================================
 
-metadata_sra <- read.csv(
+metadata <- read.csv(
   metadata_file,
   stringsAsFactors = FALSE,
   check.names = FALSE
 )
 
 required_metadata_cols <- c(
-  "Run",
-  "Group_hypothyroidism"
+  "sample_id",
+  "original_group",
+  "SIBO",
+  "hypothyroidism"
 )
 
-if (!all(required_metadata_cols %in% colnames(metadata_sra))) {
+if (!all(required_metadata_cols %in% colnames(metadata))) {
   stop(
-    "SraRunTable.csv no contiene las columnas Run y/o Group_hypothyroidism."
+    paste0(
+      "El archivo de metadatos debe contener las columnas: ",
+      paste(required_metadata_cols, collapse = ", ")
+    )
   )
 }
 
+# Comprobar identificadores duplicados
+if (anyDuplicated(metadata$sample_id)) {
+  stop("Existen identificadores de muestra duplicados en los metadatos.")
+}
+
+# Mantener únicamente las muestras presentes en la tabla de ASVs
 idx <- match(
   rownames(seqtab.nochim),
-  metadata_sra$Run
+  metadata$sample_id
 )
 
 if (any(is.na(idx))) {
@@ -542,44 +553,13 @@ if (any(is.na(idx))) {
   )
 }
 
-metadata <- data.frame(
-  sample_id = rownames(seqtab.nochim),
-  original_group =
-    metadata_sra$Group_hypothyroidism[idx],
-  stringsAsFactors = FALSE
-)
+metadata <- metadata[
+  idx,
+  required_metadata_cols,
+  drop = FALSE
+]
 
-metadata$SIBO <- ifelse(
-  metadata$original_group %in%
-    c(
-      "SIBO_noHypothyroidism",
-      "SIBO_Hypothyroidism"
-    ),
-  "SIBO_POS",
-  "SIBO_NEG"
-)
-
-metadata$hypothyroidism <- ifelse(
-  metadata$original_group %in%
-    c(
-      "noSIBO_Hypothyroidism",
-      "SIBO_Hypothyroidism"
-    ),
-  "Hypo_POS",
-  "Hypo_NEG"
-)
-
-valid_groups <- c(
-  "Control",
-  "SIBO_noHypothyroidism",
-  "noSIBO_Hypothyroidism",
-  "SIBO_Hypothyroidism"
-)
-
-if (!all(metadata$original_group %in% valid_groups)) {
-  stop("Se detectaron categorías clínicas no reconocidas.")
-}
-
+# Definir grupos y categorías de referencia
 metadata$SIBO <- factor(
   metadata$SIBO,
   levels = c("SIBO_NEG", "SIBO_POS")
@@ -592,6 +572,7 @@ metadata$hypothyroidism <- factor(
 
 rownames(metadata) <- metadata$sample_id
 
+# Comprobar correspondencia exacta entre tabla de ASVs y metadatos
 stopifnot(
   identical(
     rownames(seqtab.nochim),
@@ -599,6 +580,7 @@ stopifnot(
   )
 )
 
+# Distribución clínica final
 subgroup_counts <- table(
   SIBO = metadata$SIBO,
   Hypothyroidism = metadata$hypothyroidism
@@ -620,6 +602,7 @@ write.csv(
   file.path(results_tables, "sample_distribution.csv"),
   row.names = FALSE
 )
+
 
 
 # ==========================================================
