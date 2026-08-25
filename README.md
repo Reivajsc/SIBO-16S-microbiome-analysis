@@ -95,11 +95,11 @@ The metadata file must contain the sample identifiers and the clinical variables
 
 ### Taxonomic reference database
 
-Taxonomic assignment was performed using **SILVA v138.2**. The pipeline expects the following reference files:
+Taxonomic assignment was performed using **SILVA v138.1**. The pipeline expects the following reference files:
 
 ```text
-databases/SILVA/silva_nr99_v138.2_toGenus_trainset.fa.gz
-databases/SILVA/silva_v138.2_assignSpecies.fa.gz
+databases/SILVA/silva_nr99_v138.1_train_set.fa.gz
+databases/SILVA/silva_species_assignment_v138.fa.gz
 
 ## Running the pipeline
 
