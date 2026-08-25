@@ -53,9 +53,10 @@ TFM-SIBO-16S/
 │   │   ├── SIBO_POS/
 │   │   ├── SIBO_NEG/
 │   │   └── CONTROL/
-│   ├── metadata/
-│   │   └── SraRunTable.csv
-│   └── silva/
+│   └── metadata/
+│       └── metadata_123_samples.csv
+├── databases/
+│   └── SILVA/
 │       ├── silva_nr99_v138.2_toGenus_trainset.fa.gz
 │       └── silva_v138.2_assignSpecies.fa.gz
 └── results/
@@ -87,7 +88,7 @@ Files must be placed in the corresponding `SIBO_POS`, `SIBO_NEG`, or `CONTROL` d
 Sample metadata are expected at:
 
 ```text
-data/metadata/SraRunTable.csv
+data/metadata/metadata_123_samples.csv
 ```
 
 The metadata file must contain the sample identifiers and the clinical variables required to define SIBO status and hypothyroidism status.
@@ -97,11 +98,8 @@ The metadata file must contain the sample identifiers and the clinical variables
 Taxonomic assignment was performed using **SILVA v138.2**. The pipeline expects the following reference files:
 
 ```text
-data/silva/silva_nr99_v138.2_toGenus_trainset.fa.gz
-data/silva/silva_v138.2_assignSpecies.fa.gz
-```
-
-These reference files are not distributed with this repository and must be obtained separately.
+databases/SILVA/silva_nr99_v138.2_toGenus_trainset.fa.gz
+databases/SILVA/silva_v138.2_assignSpecies.fa.gz
 
 ## Running the pipeline
 
