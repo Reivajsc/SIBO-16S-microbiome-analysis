@@ -1788,10 +1788,21 @@ print(intersect(sig_unadj, sig_adj))
 # 20. REPRODUCIBILIDAD
 # ==========================================================
 
+results_reproducibility <- file.path(
+  results_dir,
+  "reproducibility"
+)
+
+dir.create(
+  results_reproducibility,
+  showWarnings = FALSE,
+  recursive = TRUE
+)
+
 capture.output(
   sessionInfo(),
   file = file.path(
-    project_dir,
+    results_reproducibility,
     "sessionInfo.txt"
   )
 )
@@ -1810,7 +1821,7 @@ package_versions <- data.frame(
 write.csv(
   package_versions,
   file.path(
-    results_tables,
+    results_reproducibility,
     "package_versions.csv"
   ),
   row.names = FALSE
